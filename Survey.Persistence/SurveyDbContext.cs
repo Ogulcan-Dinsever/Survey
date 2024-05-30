@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Survey.Domain.SurveyAggregate;
 
 namespace Survey.Persistence
 {
@@ -12,6 +8,9 @@ namespace Survey.Persistence
         public SurveyDbContext(DbContextOptions<SurveyDbContext> options) : base(options)
         {
         }
-        //public DbSet<WorkPlace> WorkPlace { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Option> Option { get; set; }
+        public DbSet<Question> Question { get; set; }
+        public DbSet<Surveys> Survey { get; set; }
     }
 }

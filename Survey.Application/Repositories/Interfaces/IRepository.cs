@@ -10,13 +10,13 @@ namespace Survey.Application.Repositories.Interfaces
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        Task Create(T entity);
-        Task CreateAll(List<T> entities);
-        Task<T> Find(Expression<Func<T, bool>> expression);
         Task<List<T>> GetAll();
         Task<List<T>> GetAll(Expression<Func<T, bool>> expression);
-        Task Update(T entity);
+        Task<T> Find(Expression<Func<T, bool>> expression);
+        Task<int> Create(T entity);
+        Task<int> Update(T entity);
         Task<bool> Any(Expression<Func<T, bool>> expression);
-        Task<int> Delete(Expression<Func<T, bool>> entity);
+        Task<int> Delete(T entity);
+        Task<int> Save();
     }
 }

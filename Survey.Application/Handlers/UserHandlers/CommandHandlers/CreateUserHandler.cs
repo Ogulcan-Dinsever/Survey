@@ -41,7 +41,7 @@ namespace Survey.Application.Handlers.UserHandlers.CommandHandlers
                 Email = request.Email,
                 CreatedDate = DateTime.UtcNow,
                 Password = GlobalFunctions.EncryptString(request.Password),
-                Role = request.Role,
+                Role = request.IsAdmin == true ? "Admin" : "User",
                 Name = request.Name,
                 SurName = request.SurName,
                 CreatedBy = request.CreatedBy,

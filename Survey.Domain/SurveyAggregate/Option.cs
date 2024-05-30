@@ -10,7 +10,6 @@ namespace Survey.Domain.SurveyAggregate
     public class Option : BaseEntity
     {
         public int QuestionId { get; set; }
-        public string OptionName { get; set; }
-        public bool IsCheckedOption { get; set; }  //if this choise false == this option is text answer
+        public string OptionText { get; set; }
     }
 }

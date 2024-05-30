@@ -13,5 +13,6 @@ namespace Survey.Application.Responses
         public string QuestionText { get; set; }
         public int Order { get; set; }
         public List<OptionResponse>? Options { get; set; }
+        public bool IsCheckedQuestion { get; set; }  //if this choise false == this option is text answer
     }
 }

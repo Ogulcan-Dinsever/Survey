@@ -15,6 +15,8 @@ namespace Survey.Application.Mapping
         {
             CreateMap<User, UserResponse>().ReverseMap();
             CreateMap<Option, OptionResponse>().ReverseMap();
+            CreateMap<Question, QuestionResponse>().ReverseMap();
+            CreateMap<Surveys, SurveyResponse>().ReverseMap();
         }
     }
 }

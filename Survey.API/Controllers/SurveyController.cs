@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Survey.Application.Commands.SurveyCommands;
 using Survey.Application.Commands.UserCommands;
+using Survey.Application.Queries.SurveyQueries;
 using Survey.Application.Shared;
 
 namespace Survey.API.Controllers
@@ -18,6 +20,7 @@ namespace Survey.API.Controllers
         }
 
         [HttpPost("CreateSurvey")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateSurvey(CreateSurveyCommand command)
         {
             var response = await _mediator.Send(command);
@@ -26,17 +29,28 @@ namespace Survey.API.Controllers
         }
 
         [HttpDelete("DeleteSurvey/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteSurvey(int id)
         {
-            var response = await _mediator.Send(new DeleteSurveyCommand { SurveyId = id});
+            var response = await _mediator.Send(new DeleteSurveyCommand { SurveyId = id });
 
             return CreateActionResultInstance(response);
         }
 
         [HttpGet("GetAllSurvey")]
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> GetAllSurvey()
         {
             var response = await _mediator.Send(new GetAllSurveyQuery());
+
+            return CreateActionResultInstance(response);
+        }
+
+        [HttpGet("GetSurveyBy/{id}")]
+        [Authorize(Roles = "User, Admin")]
+        public async Task<IActionResult> GetSurveyById(int id)
+        {
+            var response = await _mediator.Send(new GetSurveyByIdQuery());
 
             return CreateActionResultInstance(response);
         }

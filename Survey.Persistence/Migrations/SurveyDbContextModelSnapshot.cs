@@ -37,16 +37,13 @@ namespace Survey.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsCheckedOption")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("OptionName")
+                    b.Property<string>("OptionText")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -75,6 +72,9 @@ namespace Survey.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<bool>("IsCheckedQuestion")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("text");
 
@@ -93,6 +93,9 @@ namespace Survey.Persistence.Migrations
 
                     b.Property<bool>("Status")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("SurveyId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

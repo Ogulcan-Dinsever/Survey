@@ -10,7 +10,6 @@ namespace Survey.Application.Responses
     {
         public int Id { get; set; }
         public int QuestionId { get; set; }
-        public string OptionName { get; set; }
-        public bool IsCheckedOption { get; set; }  //if this choise false == this option is text answer
+        public string OptionText { get; set; }
     }
 }

@@ -4,16 +4,29 @@ using FluentValidation.AspNetCore;
 using Survey.Application;
 using Survey.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Hangfire;
+using Survey.Application.Services;
+using Hangfire.PostgreSql;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<SurveyDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseDefaultTypeSerializer()
+    .UsePostgreSqlStorage(builder.Configuration.GetConnectionString("DefaultConnection"), new PostgreSqlStorageOptions
+    {
+        QueuePollInterval = TimeSpan.FromSeconds(5),
+    }));
+
 
 // Add services to the container.
 builder.Services.AddApplication();
@@ -39,6 +52,8 @@ builder.Services.AddAuthentication(x =>
            Encoding.UTF8.GetBytes(builder.Configuration["keyjwt"])),
     };
 });
+builder.Services.AddHangfireServer();
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("User", policy => policy.RequireRole("User"));
@@ -110,6 +125,11 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Survey.API 
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseHangfireDashboard();
+
+RecurringJob.AddOrUpdate<SurveyService>(service => service.SendDailySurveyReport(), "*/5 * * * *");
+
 app.UseCors();
 
 app.UseAuthorization();

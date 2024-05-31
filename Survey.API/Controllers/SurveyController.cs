@@ -54,5 +54,17 @@ namespace Survey.API.Controllers
 
             return CreateActionResultInstance(response);
         }
+
+
+
+
+        [HttpPost("SaveSurveyAnswers")]
+        [Authorize(Roles = "User, Admin")]
+        public async Task<IActionResult> SaveSurveyAnswers(SaveSurveyAnswersCommand command)
+        {
+            var response = await _mediator.Send(command);
+
+            return CreateActionResultInstance(response);
+        }
     }
 }

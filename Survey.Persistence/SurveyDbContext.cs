@@ -12,5 +12,6 @@ namespace Survey.Persistence
         public DbSet<Option> Option { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<Surveys> Survey { get; set; }
+        public DbSet<Answers> Answer { get; set; }
     }
 }

@@ -27,6 +27,12 @@ builder.Services.AddHangfire(configuration => configuration
         QueuePollInterval = TimeSpan.FromSeconds(5),
     }));
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration =
+        $"{builder.Configuration.GetValue<string>("Redis:Server")}:{builder.Configuration.GetValue<int>("Redis:Port")}";
+});
+
 
 // Add services to the container.
 builder.Services.AddApplication();

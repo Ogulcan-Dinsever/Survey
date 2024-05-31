@@ -33,5 +33,13 @@ namespace Survey.API.Controllers
 
             return CreateActionResultInstance(response);
         }
+
+        [HttpPost("CacheEmailAddress")]
+        public async Task<IActionResult> CacheEmailAddress(CacheEmailAddressCommand command)
+        {
+            var response = await _mediator.Send(command);
+
+            return CreateActionResultInstance(response);
+        }
     }
 }
